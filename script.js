@@ -1,8 +1,20 @@
 let container = document.querySelector(".container");
+let btnCont = document.createElement("div");
+let adjBtn = document.createElement("button");
+let darkenMode = document.createElement("button");
+let randomMode = document.createElement("button");
 let resetBtn = document.createElement("button");
-resetBtn.classList.add("reset-btn");
-resetBtn.textContent = "Reset Squares";
-document.body.prepend(resetBtn);
+let mode = "random";
+
+darkenMode.textContent = "Darken Mode";
+adjBtn.textContent = "Adjust Size";
+randomMode.textContent = "Random Color Mode";
+resetBtn.textContent = "Reset Color";
+document.body.prepend(btnCont);
+btnCont.appendChild(darkenMode);
+btnCont.appendChild(adjBtn);
+btnCont.appendChild(randomMode);
+btnCont.appendChild(resetBtn);
 
 let compStyles = getComputedStyle(container);
 let contWidth = compStyles.width;
@@ -24,7 +36,11 @@ for (let i = 0; i < 256; i++) {
   container.appendChild(gridElement);
 }
 
-resetBtn.setAttribute("onclick", "resetSquares()");
+adjBtn.setAttribute("onclick", "resetSquares()");
+resetBtn.setAttribute("onclick", "resetColors()");
+randomMode.setAttribute("onclick", "switchMode()");
+darkenMode.setAttribute("onclick", "switchMode()");
+randomMode.toggleAttribute("disabled", true);
 
 function resetSquares() {
   let amount = prompt("How many squares do you want per side?", "16");
@@ -63,15 +79,48 @@ function resetSquares() {
 
 function addColorOnHover() {
   let gridElements = document.querySelectorAll(".element");
-
-  gridElements.forEach((element) => {
-    element.addEventListener("mouseover", () => {
-      let randomColor1 = Math.floor(Math.random() * 255) + 1;
-      let randomColor2 = Math.floor(Math.random() * 255) + 1;
-      let randomColor3 = Math.floor(Math.random() * 255) + 1;
-      element.style.backgroundColor = `rgb(${randomColor1}, ${randomColor2}, ${randomColor3})`;
+  if (mode === "random") {
+    gridElements.forEach((element) => {
+      element.addEventListener("mouseover", () => {
+        let randomColor1 = Math.floor(Math.random() * 255) + 1;
+        let randomColor2 = Math.floor(Math.random() * 255) + 1;
+        let randomColor3 = Math.floor(Math.random() * 255) + 1;
+        element.style.backgroundColor = `rgb(${randomColor1}, ${randomColor2}, ${randomColor3})`;
+      });
     });
+  }
+
+  if (mode === "darken") {
+    gridElements.forEach((element) => {
+      let opacity = 0;
+      element.addEventListener("mouseover", () => {
+        element.style.backgroundColor = `rgb(0, 0, 0, ${(opacity += 0.1)})`;
+      });
+    });
+  }
+}
+
+function resetColors() {
+  let gridElements = document.querySelectorAll(".element");
+  gridElements.forEach((element) => {
+    element.style.backgroundColor = "rgba(0, 0, 0, 0)";
   });
+}
+
+function switchMode() {
+  if (mode == "random") {
+    mode = "darken";
+    randomMode.toggleAttribute("disabled");
+    darkenMode.toggleAttribute("disabled");
+    resetColors();
+    addColorOnHover();
+  } else {
+    mode = "random";
+    randomMode.toggleAttribute("disabled");
+    darkenMode.toggleAttribute("disabled");
+    resetColors();
+    addColorOnHover();
+  }
 }
 
 addColorOnHover();

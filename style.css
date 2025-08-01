@@ -19,13 +19,18 @@ body {
 }
 
 .element {
-  background-color: blueviolet;
+  background-color: rgba(0, 0, 0, 0);
   border: 1px solid black;
 }
 
-.reset-btn {
+button {
   margin: 5px;
   padding: 5px;
   background-color: purple;
   color: white;
+}
+
+button:disabled {
+  background-color: gray;
+  opacity: 0.5;
 }

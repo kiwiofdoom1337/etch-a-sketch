@@ -66,7 +66,10 @@ function addColorOnHover() {
 
   gridElements.forEach((element) => {
     element.addEventListener("mouseover", () => {
-      element.style.backgroundColor = "yellow";
+      let randomColor1 = Math.floor(Math.random() * 255) + 1;
+      let randomColor2 = Math.floor(Math.random() * 255) + 1;
+      let randomColor3 = Math.floor(Math.random() * 255) + 1;
+      element.style.backgroundColor = `rgb(${randomColor1}, ${randomColor2}, ${randomColor3})`;
     });
   });
 }

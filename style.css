@@ -13,13 +13,19 @@ body {
 
 .container {
   display: flex;
-  width: 512px;
+  width: 800px;
+  height: 800px;
   flex-wrap: wrap;
 }
 
 .element {
-  width: 32px;
-  height: 32px;
   background-color: blueviolet;
   border: 1px solid black;
+}
+
+.reset-btn {
+  margin: 5px;
+  padding: 5px;
+  background-color: purple;
+  color: white;
 }
